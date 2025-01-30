@@ -13,8 +13,9 @@ const path = require("path");
 const cors = require("cors");
 dotenv.config();
 
+
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.CLIENTURL,
   methods: ["GET", "POST"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
