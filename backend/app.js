@@ -11,6 +11,7 @@ require("./config/passport")(passport);
 const cookieParser = require('cookie-parser');
 const path = require("path");
 const cors = require("cors");
+dotenv.config();
 
 app.use(cors({
   origin: "http://localhost:5173",
@@ -19,8 +20,10 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
+
+
 // MongoDB connection
-mongoose.connect("mongodb://localhost:27017/passAuth").then(()=>console.log("MongoDB connected!")).catch((err)=>console.error("MongoDB connection error:", err));
+mongoose.connect(process.env.MONGOOSEURI).then(()=>console.log("MongoDB connected!😎")).catch((err)=>console.error("MongoDB connection error:", err));
 
 
 

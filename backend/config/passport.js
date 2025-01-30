@@ -1,6 +1,10 @@
 const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 const User = require("../models/user"); // Adjust path to your user model
 
+const dotenv = require("dotenv");
+dotenv.config();
+
+
 // Custom cookie extractor if we want to extracr from the cookie in Future
 const cookieExtractor = function (req) {
   let token = null;
@@ -14,7 +18,7 @@ const opts = {
   // jwtFromRequest: cookieExtractor, // Use the custom cookie extractor
 
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extract JWT from the Authorization header
-  secretOrKey: "secrethaibhai",
+  secretOrKey: process.env.SECRET,
 };
 
 module.exports = (passport) => {
