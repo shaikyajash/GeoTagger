@@ -19,7 +19,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:5000/auth/signup";
+      const url = "https://geotagger-cwu7.onrender.com/auth/signup";
       const payload = {
         email: data.email,
         username: data.username,

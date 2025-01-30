@@ -18,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:5000/auth/login";
+      const url = "https://geotagger-cwu7.onrender.com/auth/login";
       const response = await axios.post(url, data);
 
       if (response.data.token) {

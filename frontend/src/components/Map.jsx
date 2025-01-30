@@ -24,7 +24,7 @@ const MapComponent = () => {
     const fetchPins = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/pins", {
+        const response = await axios.get("https://geotagger-cwu7.onrender.com/pins", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -129,7 +129,7 @@ const MapComponent = () => {
   const savePins = (pinsToSave = pins) => {
     try {
       const token = localStorage.getItem("token");
-      axios.post("http://localhost:5000/pins", { pins: pinsToSave }, {
+      axios.post("https://geotagger-cwu7.onrender.com/pins", { pins: pinsToSave }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
