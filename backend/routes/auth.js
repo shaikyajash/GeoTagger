@@ -9,15 +9,9 @@ const router = express.Router();
 
 //signup route
 router.post("/signup", signupHandler);
-router.get("/signup",(req, res)=>{
-  return res.render("signup");
-})
 
 //login route
 router.post("/login", loginHandler);
-router.get("/login", (req, res)=>{
- return  res.render("login");
-})
 
 
 router.get(

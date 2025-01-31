@@ -13,9 +13,13 @@ const path = require("path");
 const cors = require("cors");
 dotenv.config();
 
+const allowedOrigins = ["http://localhost:5173"];
+if (process.env.CLIENTURL) {
+  allowedOrigins.push(process.env.CLIENTURL);
+}
 
 app.use(cors({
-  origin: process.env.CLIENTURL || "http://localhost:5173",
+  origin: allowedOrigins,
   methods: ["GET", "POST"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]

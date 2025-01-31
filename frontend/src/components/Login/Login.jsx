@@ -24,9 +24,19 @@ const Login = () => {
       if (response.data.token) {
         // Save the token in localStorage
         localStorage.setItem("token", response.data.token);
-        // Redirect to the home page after login
-
-        navigate("/main");
+        setMessage("Logged in successfully. Redirecting to home...");
+        
+        if(response.data.success){
+          setTimeout(() => {
+            navigate("/home"); // Redirect to home after 2 seconds
+          }, 1000);
+        }else{
+          setMessage("Invalid credentials. Please try again.");
+          setTimeout(() => {
+            navigate("/login"); // Redirect to login after 2 seconds
+          }
+          , 1000);
+        }
         
 
       }
@@ -39,7 +49,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="w-full max-w-md p-8 bg-white bg-opacity-90 backdrop-blur-lg rounded-lg shadow-xl">
-        <h1 className="text-4xl font-bold text-gray-800 mb-8 animate-fadeIn">Login</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-8 animate-fadeIn">GeoTagger</h1>
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-6 bg-white p-6 rounded-lg border border-gray-300 shadow-lg"
