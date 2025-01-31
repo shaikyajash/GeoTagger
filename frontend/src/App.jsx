@@ -21,7 +21,7 @@ const App = () => {
   return (
     <Routes>
       {/* Rendering Main only if user is authenticated */}
-      {user&&<Route path="/" element={<Main />} />}
+      {/* {user&&<Route path="/" element={<Main />} />} */}
       
       {/* Other routes */}
       <Route path="/map" element={<Map />} />
