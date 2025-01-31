@@ -15,12 +15,12 @@ const App = () => {
     if (token) {
       setUser({ token });
     }
-  }, []);
+  });
 
 
   return (
     <Routes>
-      {/* Render Main only if user is authenticated */}
+      {/* Rendering Main only if user is authenticated */}
       {user&&<Route path="/" element={<Main />} />}
       
       {/* Other routes */}
