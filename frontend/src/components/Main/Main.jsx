@@ -22,7 +22,7 @@ const Main = () => {
         );
         setUser(response.data.user); // Setting the user details in state
       } catch (err) {
-        window.location.href = "/login";
+        navigate("/login"); // Redirect to login if there is an error
         setError(
           err.response?.data?.message || "Failed to fetch protected data"
         );
