@@ -14,13 +14,20 @@ const App = () => {
       setUser({ token });
     }
   }, []);
+  console.log(user);
 
   return (
     <Routes>
-      <Route path="/" element={user ? <Main /> : <Navigate to="/login" />} />
+      
       <Route path="/map" element={<Map />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/main" element={user ? <Main /> : <Navigate to="/login" />} />
+
+      <Route path="*" element={<Navigate to="/main" />} />
+      
+
+
     </Routes>
   );
 };
