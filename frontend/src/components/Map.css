@@ -1,0 +1,191 @@
+/* MapComponent.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.map-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(to top right, #66bb6a, #42a5f5);
+}
+
+.sidebar {
+  width: 20%; /* Reduced width for a thinner sidebar */
+  padding: 1rem; /* Adjusted padding for a more compact look */
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-right: 2px solid #ccc;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-title {
+  font-size: 1.8rem; /* Slightly smaller font size */
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #2193b0, #6dd5ed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pin-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pin-item {
+  padding: 0.8rem; /* Reduced padding for a more compact look */
+  background: #f7f7f7;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 0.8rem; /* Reduced margin for a more compact look */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.pin-item:hover {
+  transform: scale(1.05);
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 0.4rem; /* Reduced padding for a more compact look */
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.9rem; /* Slightly smaller font size */
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.delete-btn {
+  background: #e57373;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #ef5350;
+}
+
+.save-btn {
+  margin-top: 0.8rem; /* Reduced margin for a more compact look */
+  background: #f7f7f7;
+  color: #333;
+  border: 2px solid #ccc;
+}
+
+.save-btn:hover {
+  background: #e0e0e0;
+}
+
+.search-form {
+  margin-top: 1rem; /* Reduced margin for a more compact look */
+}
+
+.search-input {
+  width: 100%;
+  height: 2.2rem; /* Slightly reduced height */
+  padding: 0 0.8rem; /* Adjusted padding */
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  background: #f7f7f7;
+  font-size: 0.9rem; /* Slightly smaller font size */
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #42a5f5;
+}
+
+.search-btn {
+  margin-top: 0.5rem;
+  background: #66bb6a;
+  color: white;
+}
+
+.search-btn:hover {
+  background: #4caf50;
+}
+
+.map-view {
+  width: 80%; /* Increased width for the map */
+  height: 100vh;
+}
+
+.map-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.map {
+  height: 100vh;
+  width: 100%;
+}
+
+.popup-content {
+  padding: 1rem;
+  background: #f7f7f7;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.popup-input {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  background: #f7f7f7;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.popup-input:focus {
+  border-color: #42a5f5;
+}
+
+.add-pin-btn {
+  margin-top: 0.5rem;
+  background: #66bb6a;
+  color: white;
+}
+
+.add-pin-btn:hover {
+  background: #4caf50;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #ccc;
+  }
+
+  .map-view {
+    width: 100%;
+    height: calc(100vh - 300px);
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-title {
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+}

@@ -1,6 +1,8 @@
+// Login.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import './Login.css'; // Import the CSS file
 
 const Login = () => {
   const [data, setData] = useState({
@@ -22,41 +24,31 @@ const Login = () => {
       const response = await axios.post(url, data);
 
       if (response.data.token) {
-        // Save the token in localStorage
         localStorage.setItem("token", response.data.token);
         setMessage("Logged in successfully. Redirecting to home...");
-        
-        if(response.data.success){
+
+        if (response.data.success) {
           setTimeout(() => {
-            navigate("/home"); // Redirect to home after 2 seconds
+            navigate("/home");
           }, 1000);
-        }else{
+        } else {
           setMessage("Invalid credentials. Please try again.");
           setTimeout(() => {
-            navigate("/login"); // Redirect to login after 2 seconds
-          }
-          , 1000);
+            navigate("/login");
+          }, 1000);
         }
-        
-
       }
     } catch (error) {
-      // Display the error message
       setMessage(error.response?.data?.message || "An error occurred");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-      <div className="w-full max-w-md p-8 bg-white bg-opacity-90 backdrop-blur-lg rounded-lg shadow-xl">
-        <h1 className="text-4xl font-bold text-gray-800 mb-8 animate-fadeIn">GeoTagger</h1>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-6 bg-white p-6 rounded-lg border border-gray-300 shadow-lg"
-        >
-          <h2 className="text-2xl font-semibold text-gray-700">
-            Login to your account
-          </h2>
+    <div className="login-container">
+      <div className="login-box">
+        <h1 className="login-title">GeoTagger</h1>
+        <form onSubmit={handleSubmit} className="login-form">
+          <h2 className="form-title">Login to your account</h2>
           <input
             type="email"
             placeholder="Email"
@@ -64,7 +56,7 @@ const Login = () => {
             onChange={handleChange}
             value={data.email}
             required
-            className="h-12 rounded-lg border border-gray-300 bg-gray-100 text-gray-800 font-medium px-4 outline-none placeholder-gray-500 focus:border-indigo-500 transition"
+            className="input-field"
           />
           <input
             type="password"
@@ -73,33 +65,23 @@ const Login = () => {
             onChange={handleChange}
             value={data.password}
             required
-            className="h-12 rounded-lg border border-gray-300 bg-gray-100 text-gray-800 font-medium px-4 outline-none placeholder-gray-500 focus:border-indigo-500 transition"
+            className="input-field"
           />
-          <button
-            type="submit"
-            className="w-40 h-12 mx-auto mt-8 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105"
-          >
+          <button type="submit" className="btn login-btn">
             Login
           </button>
         </form>
 
         {message && (
-          <div
-            className={`mt-4 p-3 text-center rounded ${
-              message.includes("successfully") ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"
-            }`}
-          >
+          <div className={`message-box ${message.includes("successfully") ? "success" : "error"}`}>
             <p>{message}</p>
           </div>
         )}
       </div>
-      <div className="ml-10 mt-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-3">New User?</h2>
+      <div className="signup-prompt">
+        <h2 className="signup-title">New User?</h2>
         <Link to="/signup">
-          <button
-            type="button"
-            className="w-40 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105"
-          >
+          <button type="button" className="btn signup-btn">
             Signup
           </button>
         </Link>
