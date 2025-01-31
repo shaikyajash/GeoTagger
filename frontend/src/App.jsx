@@ -5,8 +5,6 @@ import Signup from './components/Signup';
 import Login from './components/Login/Login';
 import Map from './components/Map';
 
-
-
 const App = () => {
   const [user, setUser] = useState(null);
 
@@ -15,19 +13,14 @@ const App = () => {
     if (token) {
       setUser({ token });
     }
-  });
-
+  }, []);
 
   return (
     <Routes>
-      {/* Rendering Main only if user is authenticated */}
-      {user&&<Route path="/" element={<Main />} />}
-      
-      {/* Other routes */}
+      <Route path="/" element={user ? <Main /> : <Navigate to="/login" />} />
       <Route path="/map" element={<Map />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Login/>} />
     </Routes>
   );
 };
