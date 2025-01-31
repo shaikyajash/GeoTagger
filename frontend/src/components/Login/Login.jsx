@@ -26,8 +26,9 @@ const Login = () => {
         localStorage.setItem("token", response.data.token);
         // Redirect to the home page after login
 
-        navigate("/");
+        navigate("/main");
         
+
       }
     } catch (error) {
       // Display the error message
