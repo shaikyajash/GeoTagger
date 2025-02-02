@@ -10,7 +10,8 @@ import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
-import './Map.css'; 
+import './Map.css';
+import L from 'leaflet';
 
 const MapComponent = () => {
   const [pins, setPins] = useState([]);
@@ -37,6 +38,14 @@ const MapComponent = () => {
     };
     fetchPins();
   }, []);
+
+  const customIcon = L.icon({
+    iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
+    iconSize: [41, 61],
+    iconAnchor: [22, 61],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 61],
+  });
 
   const addTemporaryPin = async (e) => {
     const { lat, lng } = e.latlng;
@@ -118,24 +127,23 @@ const MapComponent = () => {
   };
 
   const updatePinDescription = (id, description) => {
-    setPins(pins.map((pin) => (pin.id === id ? { ...pin, description } : pin)));
+    setPins(pins.map((pin) => (pin._id === id || pin.id === id ? { ...pin, description } : pin)));
   };
 
   const deletePin = (id) => {
-    const updatedPins = pins.filter((pin) => pin.id !== id);
+    const updatedPins = pins.filter((pin) => pin._id !== id && pin.id !== id);
     setPins(updatedPins);
     savePins(updatedPins);
   };
 
-  const savePins = (pinsToSave = pins) => {
+  const savePins = async (pinsToSave) => {
     try {
       const token = localStorage.getItem("token");
-      axios.post("https://geotagger-cwu7.onrender.com/pins", { pins: pinsToSave }, {
+      await axios.post("https://geotagger-cwu7.onrender.com/pins", { pins: pinsToSave }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
     } catch (error) {
       console.error("Error saving pins:", error);
       alert("Failed to save pins. Please try again.");
@@ -165,16 +173,16 @@ const MapComponent = () => {
       >
         <h2 className="sidebar-title">Pins</h2>
         <ul className="pin-list">
-          {pins.map((pin) => (
-            <li key={pin.id} className="pin-item">
-              <div>
+          {pins.map((pin, index) => (
+            <li key={pin._id || pin.id || index} className="pin-item">
+              <div>                                      
                 <strong>Location:</strong> {pin.placeName}
                 <br />
                 <strong>Description:</strong>{" "}
                 {pin.description || "No description"}
               </div>
               <button
-                onClick={() => deletePin(pin.id)}
+                onClick={() => deletePin(pin._id || pin.id)}
                 className="btn delete-btn"
               >
                 Delete
@@ -182,7 +190,7 @@ const MapComponent = () => {
             </li>
           ))}
         </ul>
-        <button onClick={() => savePins()} className="btn save-btn">
+        <button onClick={() => savePins(pins)} className="btn save-btn">
           Save All Pins
         </button>
         <form onSubmit={handleSearchSubmit} className="search-form">
@@ -216,8 +224,8 @@ const MapComponent = () => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             <MapEvents />
-            {pins.map((pin) => (
-              <Marker key={pin.id} position={pin.position}>
+            {pins.map((pin, index) => (
+              <Marker key={pin._id || pin.id || index} position={pin.position} icon={customIcon}>
                 <Popup>
                   <div className="popup-content">
                     <strong>Location:</strong> {pin.placeName}
@@ -226,7 +234,7 @@ const MapComponent = () => {
                       type="text"
                       value={pin.description}
                       onChange={(e) =>
-                        updatePinDescription(pin.id, e.target.value)
+                        updatePinDescription(pin._id || pin.id, e.target.value)
                       }
                       placeholder="Add description"
                       className="popup-input"
@@ -235,46 +243,9 @@ const MapComponent = () => {
                 </Popup>
               </Marker>
             ))}
-            {temporaryPin && (
-              <Marker
-                position={temporaryPin.position}
-                ref={tempMarkerRef}
-                eventHandlers={{
-                  add: () => {
-                    if (tempMarkerRef.current) {
-                      tempMarkerRef.current.openPopup();
-                    }
-                  },
-                }}
-              >
-                <Popup>
-                  <div className="popup-content">
-                    <strong>Location:</strong> {temporaryPin.placeName}
-                    <br />
-                    <input
-                      type="text"
-                      value={tempDescription}
-                      onChange={(e) => setTempDescription(e.target.value)}
-                      placeholder="Add description"
-                      className="popup-input"
-                    />
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        confirmPin();
-                      }}
-                      className="btn add-pin-btn"
-                    >
-                      Add Pin
-                    </button>
-                  </div>
-                </Popup>
-              </Marker>
-            )}
           </MapContainer>
         </motion.div>
       </div>
-      
     </div>
   );
 };
