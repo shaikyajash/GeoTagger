@@ -10,8 +10,8 @@ import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
-import './Map.css';
 import L from 'leaflet';
+import './Map.css';
 
 const MapComponent = () => {
   const [pins, setPins] = useState([]);
@@ -243,6 +243,43 @@ const MapComponent = () => {
                 </Popup>
               </Marker>
             ))}
+            {temporaryPin && (
+              <Marker
+                position={temporaryPin.position}
+                icon={customIcon}
+                ref={tempMarkerRef}
+                eventHandlers={{
+                  add: () => {
+                    if (tempMarkerRef.current) {
+                      tempMarkerRef.current.openPopup();
+                    }
+                  },
+                }}
+              >
+                <Popup>
+                  <div className="popup-content">
+                    <strong>Location:</strong> {temporaryPin.placeName}
+                    <br />
+                    <input
+                      type="text"
+                      value={tempDescription}
+                      onChange={(e) => setTempDescription(e.target.value)}
+                      placeholder="Add description"
+                      className="popup-input"
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        confirmPin();
+                      }}
+                      className="btn add-pin-btn"
+                    >
+                      Add Pin
+                    </button>
+                  </div>
+                </Popup>
+              </Marker>
+            )}
           </MapContainer>
         </motion.div>
       </div>
